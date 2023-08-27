@@ -1,0 +1,37 @@
+package pl.coderslab.service;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
+import pl.coderslab.model.Book;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@Getter
+@Setter
+public class MockBookService implements BookService {
+    private List<Book> list;
+    private static Long idUsed = 0L;
+
+    public MockBookService() {
+        list = new ArrayList<>();
+        list.add(new Book(assignId(), "9788324631766","Thinking in Java",
+                "Bruce Eckel", "Helion", "programming"));
+        list.add(new Book(assignId(), "9788324627738", "Rusz glowa Java.",
+                "Sierra Kathy, Bates Bert", "Helion", "programming"));
+        list.add(new Book(assignId(), "9780130819338", "Java 2. Podstawy",
+                "Cay Horstmann, Gary Cornell", "Helion", "programming"));
+    }
+
+    private static Long assignId() {
+        idUsed += 1;
+        return idUsed;
+    }
+
+    @Override
+    public List<Book> getBooks() {
+        return list;
+    }
+}
