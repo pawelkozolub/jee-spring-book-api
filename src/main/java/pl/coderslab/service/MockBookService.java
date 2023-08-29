@@ -7,6 +7,7 @@ import pl.coderslab.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Getter
@@ -33,5 +34,12 @@ public class MockBookService implements BookService {
     @Override
     public List<Book> getBooks() {
         return list;
+    }
+
+    @Override
+    public Optional<Book> get(Long id) {
+        return list.stream()
+                .filter(e -> e.getId().equals(id))
+                .findFirst();
     }
 }
