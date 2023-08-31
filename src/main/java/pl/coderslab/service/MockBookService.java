@@ -42,4 +42,10 @@ public class MockBookService implements BookService {
                 .filter(e -> e.getId().equals(id))
                 .findFirst();
     }
+
+    @Override
+    public void add(Book book) {
+        book.setId(assignId());
+        list.add(book);
+    }
 }
