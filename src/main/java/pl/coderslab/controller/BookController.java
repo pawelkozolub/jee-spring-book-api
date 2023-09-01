@@ -1,6 +1,8 @@
 package pl.coderslab.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import pl.coderslab.model.Book;
 import pl.coderslab.service.BookService;
 
@@ -29,7 +31,18 @@ public class BookController {
 
     @GetMapping("/{id}")
     public Book getBook(@PathVariable(name="id") Long id) {
-        return bookService.get(id).orElse(null);
+        //return bookService.get(id).orElse(null);  // no information if object exists > only null returned
+        return bookService.get(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBook(@PathVariable(name="id") Long id) {
+        bookService.delete(id);
+    }
+
+    @PutMapping
+    public void updateBook(@RequestBody Book book) {
+        bookService.update(book);
     }
 
     @RequestMapping("/helloBook")
